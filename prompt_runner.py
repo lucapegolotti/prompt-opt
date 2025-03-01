@@ -6,16 +6,13 @@ from dotenv import load_dotenv
 from anthropic import Anthropic # Using Anthropic as per your setup
 
 # --- Configuration ---
-# Load environment variables from .env file (for API KEY)
 load_dotenv() 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
 # LLM Configuration
 # Find model names here: https://docs.anthropic.com/claude/docs/models-overview
-# For GSM8K, a strong model is recommended.
-# Opus is the most powerful, Sonnet is faster and cheaper, Haiku is fastest.
 LLM_MODEL_NAME = "claude-3-5-haiku-20241022" 
-MAX_TOKENS_TO_SAMPLE = 700 # Max tokens for the LLM's response (GSM8K CoT can be long)
+MAX_TOKENS_TO_SAMPLE = 700 # Max tokens for the LLM's response
 
 # File Paths (ensure these match what your download script created)
 BENCHMARK_DATA_DIR = "./benchmark_data"
@@ -230,10 +227,3 @@ if __name__ == "__main__":
                     print(f"    Ref_Answer: {failure['reference_final_answer']}")
                     print(f"    LLM_Raw_Output (snippet): {failure['llm_output'][:100] if failure['llm_output'] else 'N/A'}...")
                     print(f"    LLM_Extracted: {failure['extracted_prediction']}")
-                
-                # Optionally save all failure cases to a file for later analysis
-                # failure_log_path = os.path.join(BENCHMARK_DATA_DIR, "baseline_failures.jsonl")
-                # with open(failure_log_path, 'w') as f_fail:
-                #     for failure_case in failures:
-                #         f_fail.write(json.dumps(failure_case) + "\n")
-                # print(f"\nAll failure cases logged to: {failure_log_path}")
